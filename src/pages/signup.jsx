@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { auth } from '../../firebase/';
+import { auth, db } from '../../firebase/';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
 import SignupIndividu from '../components/signupIndividu';
 
@@ -13,15 +14,26 @@ export default function Signup() {
 	const navigate = useNavigate();
 
 	const handleSignup = async (event) => {
-		event.preventDefault();
-		if (password !== confirmPassword) { return setErrorMessage("Passwords do not match"); }
-		try {
-			await createUserWithEmailAndPassword(auth, email, password);
-			navigate('/individu');
-		} catch (error) {
-			setErrorMessage(error.message);
-		}
-	};
+        event.preventDefault();
+        if (password !== confirmPassword) { 
+            return setErrorMessage("Passwords do not match"); 
+        }
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            // Assign user role in Firestore
+            await setDoc(doc(db, "users", user.uid), {
+                email: user.email,
+                role: 'user',  // Assign role as 'user' after signup
+                fullName: fullName,
+            });
+
+            navigate('/individu');
+        } catch (error) {
+            setErrorMessage(error.message);
+        }
+    };
 
 	return (
 		<div className="flex flex-col items-center justify-center min-h-screen bg-[url('/bege.png')] bg-center bg-cover">
