@@ -1,10 +1,18 @@
-function LandingPage() {
-	return (
-	  <div className="bg-blue-500 text-white text-center p-4">
-		<h1 className="text-2xl font-bold">Landing Page Test</h1>
-	  </div>
-	);
-  }
-  
-  export default LandingPage;
-  
+import React from 'react';
+import Navbar from '../components/Navbar';
+import Hero from '../components/Hero';
+import Activities from '../components/Activities';
+import Footer from '../components/Footer';
+
+const LandingPage = () => {
+  return (
+    <div>
+      <Navbar />
+      <Hero />
+      <Activities />
+      <Footer />
+    </div>
+  );
+};
+
+export default LandingPage;
