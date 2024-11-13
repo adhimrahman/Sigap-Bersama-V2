@@ -1,10 +1,10 @@
 
 function ProfileDashboard() {
-    console.log("ProfileDashboard loaded");
+    console.log("Signup loaded");
 
 	return(
 		<>
-			<h1 className="text-black">LingkunganEvent</h1>
+			<h1 className="text-black">ProfileDashboard</h1>
 		</>
 	)
 }

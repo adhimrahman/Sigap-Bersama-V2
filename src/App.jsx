@@ -5,9 +5,10 @@ import Signup from "./pages/signup";
 import LingkunganEvent from "./pages/lingkunganEvent";
 import LandingPage from "./pages/landingPage";
 import ProfileDashboard from "./pages/profileDashboard";
+import './index.css';
 
 const App = () => (
-  <Router>
+  <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/signin" element={<Signin />} />
