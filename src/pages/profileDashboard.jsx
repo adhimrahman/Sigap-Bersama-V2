@@ -1,6 +1,4 @@
-import React from 'react';
 
-<<<<<<< HEAD
 const ProfileDashboard = () => {
   return (
     <div className="flex h-screen font-sans text-gray-800">
@@ -23,17 +21,6 @@ const ProfileDashboard = () => {
           </nav>
           <div className="text-2xl">👤</div>
         </header>
-=======
-function ProfileDashboard() {
-    console.log("Signup loaded");
-
-	return(
-		<>
-			<h1 className="text-black">ProfileDashboard</h1>
-		</>
-	)
-}
->>>>>>> 7912c054e68aa14a7b507bf7ef76d4960c1ad307
 
         {/* Profile Section */}
         <div className="profile-section bg-gray-50 p-6 rounded-lg shadow-md mt-[80px]">
