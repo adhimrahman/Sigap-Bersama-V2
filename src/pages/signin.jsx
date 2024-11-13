@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { auth } from '../../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/logo.png'
 
 export default function Signin() {
 	const [email, setEmail] = useState('');
@@ -31,7 +32,7 @@ export default function Signin() {
 				onSubmit={handleSignin}>
 
 				<div className="flex items-center justify-center w-3/12 mt-8">
-					{/* <img src="./../asstes/logo.png" alt="logo" className="w-[550px] h-[550px]" /> */}
+					<img src={logo} alt="logo" className="w-[550px]" />
 				</div>
 
 				<div className="flex flex-col w-10/12 gap-3 capitalize">
