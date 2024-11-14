@@ -9,31 +9,52 @@ export default function Signin() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [role, setRole] = useState('guest');
+	const [errorMessage, setErrorMessage] = useState(null);
 	const navigate = useNavigate();
 
-	const handleSignin = async (event) => {
-        event.preventDefault();
-        try {
-            const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-
-            // Retrieve user role from Firestore
-            const userDoc = await getDoc(doc(db, "users", user.uid));
-            if (userDoc.exists()) {
-                const userData = userDoc.data();
-                setRole(userData.role);  // Set role based on Firestore data
-                
-                // Navigate based on role
-                if (userData.role === 'user') {
-                    navigate('/individu');
-                } else {
-                    navigate('/komunitas');
-                }
+	// Redirect if user is already signed in
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (user) {
+                navigate('/');
             }
-        } catch (error) {
-            console.error(error);
-        }
-    };
+        });
+        return unsubscribe;
+    }, [navigate]);
+
+	const handleSignin = async (event) => {
+		event.preventDefault();
+		try {
+			const userCredential = await signInWithEmailAndPassword(auth, email, password);
+			const user = userCredential.user;
+	
+			const userDoc = await getDoc(doc(db, "users", user.uid));
+			if (userDoc.exists()) {
+				const userData = userDoc.data();
+				setRole(userData.role);
+				
+				if (userData.role === 'user') {
+                    navigate('/');
+                } else if (userData.role === 'komunitas') {
+                    navigate('/komunitas');
+                } else {
+                    navigate('/individu'); // Default page if role is unrecognized
+                }
+			}
+		} catch (error) {
+			// Handle specific Firebase auth error codes
+			if (error.code === 'auth/invalid-credential') {
+				setErrorMessage("Invalid credentials. Please check your email and password.");
+			} else if (error.code === 'auth/user-not-found') {
+				setErrorMessage("No user found with this email.");
+			} else if (error.code === 'auth/wrong-password') {
+				setErrorMessage("Incorrect password. Please try again.");
+			} else {
+				setErrorMessage("Failed to sign in. Please try again later.");
+			}
+			console.error(error);
+		}
+	};
 
 	return (
 		<div className="flex flex-col items-center justify-center min-h-screen bg-[url('./assets/bege.png')] bg-center bg-cover">
@@ -61,6 +82,8 @@ export default function Signin() {
 					</button>
 				</div>
 
+				{errorMessage && <p className="text-red-500 mt-4">{errorMessage}</p>}
+	
 				<p className="mt-2 mb-8">Belum punya akun? 
 					<span onClick={() => navigate('/signup')} className="text-blue-500 ml-3 cursor-pointer hover:font-bold">Daftar</span>
 				</p>
