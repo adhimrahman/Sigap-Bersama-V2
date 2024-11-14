@@ -12,7 +12,7 @@ export default function Signin() {
 	const [errorMessage, setErrorMessage] = useState(null);
 	const navigate = useNavigate();
 
-	// Redirect if user is already signed in
+	// kalau user sudah signin arahkan ke landingpage
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
@@ -38,19 +38,21 @@ export default function Signin() {
                 } else if (userData.role === 'komunitas') {
                     navigate('/komunitas');
                 } else {
-                    navigate('/individu'); // Default page if role is unrecognized
+                    navigate('/');
                 }
 			}
+			console.log(role)
 		} catch (error) {
-			// Handle specific Firebase auth error codes
 			if (error.code === 'auth/invalid-credential') {
 				setErrorMessage("Invalid credentials. Please check your email and password.");
 			} else if (error.code === 'auth/user-not-found') {
 				setErrorMessage("No user found with this email.");
 			} else if (error.code === 'auth/wrong-password') {
 				setErrorMessage("Incorrect password. Please try again.");
+			} else if (error.code === 'auth/too-many-requests'){
+				setErrorMessage("Too many attempts. Please wait a few minutes before trying again.");
 			} else {
-				setErrorMessage("Failed to sign in. Please try again later.");
+				setErrorMessage("Failed to sign in. Please try again later.");			
 			}
 			console.error(error);
 		}

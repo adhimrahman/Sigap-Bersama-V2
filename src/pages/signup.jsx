@@ -22,14 +22,14 @@ export default function Signup() {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
 
-            // Assign user role in Firestore
+            // masukkan ke firestore data usernya
             await setDoc(doc(db, "users", user.uid), {
                 email: user.email,
-                role: 'user',  // Assign role as 'user' after signup
+                role: 'user',
                 fullName: fullName,
             });
 
-            navigate('/individu');
+            navigate('/');
         } catch (error) {
             setErrorMessage(error.message);
         }
