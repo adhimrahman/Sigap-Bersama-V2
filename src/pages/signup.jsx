@@ -36,7 +36,7 @@ export default function Signup() {
     };
 
 	return (
-		<div className="flex flex-col items-center justify-center min-h-screen bg-[url('/bege.png')] bg-center bg-cover">
+		<div className="flex flex-col items-center justify-center min-h-screen bg-[url('./assets/bege.png')] bg-center bg-cover text-white">
 			<SignupIndividu handleSignup={handleSignup} setEmail={setEmail} setPassword={setPassword} setConfirmPassword={setConfirmPassword}
 				setFullName={setFullName} email={email} password={password} confirmPassword={confirmPassword} fullName={fullName} 
 			/>

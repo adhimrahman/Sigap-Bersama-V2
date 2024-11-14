@@ -37,7 +37,7 @@ export default function Signin() {
 
 	return (
 		<div className="flex flex-col items-center justify-center min-h-screen bg-[url('./assets/bege.png')] bg-center bg-cover">
-			<form className="flex flex-col items-center justify-center bg-[#282C34]/95 w-2/5 max-h-fit rounded-[16px] backdrop-blur-sm gap-3"
+			<form className="flex flex-col items-center justify-center bg-[#282C34]/95 w-2/5 max-h-fit rounded-[16px] backdrop-blur-sm gap-3 text-white"
 				onSubmit={handleSignin}>
 
 				<div className="flex items-center justify-center w-3/12 mt-8">
